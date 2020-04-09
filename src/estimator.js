@@ -26,7 +26,7 @@ const covid19ImpactEstimator = (data) => {
   const servercasesForICUByRequestedTime = Math.floor((5 / 100) * serverinfectionsByRequestedTime);
   // cases that will require ventilators
   const casesForVentilatorsByRequestedTime = Math.floor((2 / 100) * infectionsByRequestedTime);
-  const servCasesForVentByRequestedTime = Math.floor((2 / 100) * serverinfectionsByRequestedTime);
+  const serCasesForVentByRequestedTime = Math.floor((2 / 100) * serverinfectionsByRequestedTime);
   // amount of money to be lost in the economy
   const totalIncomePerperson = data.region.avgDailyIncomeInUSD * estimateTime;
   const dailyAvgIncome = data.region.avgDailyIncomePopulation;
@@ -52,7 +52,7 @@ const covid19ImpactEstimator = (data) => {
       severeCasesByRequestedTime: servlSevereCasesByRequestedTime,
       hospitalBedsByRequestedTime: serverehospitalBedsByRequestedTime,
       casesForICUByRequestedTime: servercasesForICUByRequestedTime,
-      casesForVentilatorsByRequestedTime: servCasesForVentByRequestedTime,
+      casesForVentilatorsByRequestedTime: serCasesForVentByRequestedTime,
       dollarsInFlight: svrDlrsInFlight
     }
   };
