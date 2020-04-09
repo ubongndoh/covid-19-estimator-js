@@ -1,9 +1,8 @@
 const covid19ImpactEstimator = (data) => {
-  // challenge-1
   const input = data;
   const currentlyInfected = data.reportedCases * 10;
-  const serverCurrentlyInfected = data.reportedCases * 50;
-  // Calculate-the-time-to-elapse
+  const serverCurrentlyInfcted = data.reportedCases * 50;
+  // Calculate the time to elapse
   let estimateTime;
   if (data.periodType === 'days') {
     estimateTime = data.timeToElapse;
@@ -14,29 +13,45 @@ const covid19ImpactEstimator = (data) => {
   }
   const setOfDays = Math.floor(estimateTime / 3);
   const infectionsByRequestedTime = currentlyInfected * (2 ** setOfDays);
-  const serverinfectionsByRequestedTime = serverCurrentlyInfected * (2 ** setOfDays);
-  // challenge-2
+  const serverinfectionsByRequestedTime = serverCurrentlyInfcted * (2 ** setOfDays);
   const severeCasesByRequestedTime = ((15 / 100) * infectionsByRequestedTime);
-  const ServeresevereCasesByRequestedTime = ((15 / 100) * serverinfectionsByRequestedTime);
+  const serveralSevereCasesByRequestedTime = ((15 / 100) * serverinfectionsByRequestedTime);
   // calculate the number of beds
-  const bedsAreadyOccupied = ((65/100) * data.totalHospitalBeds);
+  const bedsAreadyOccupied = ((65 / 100) * data.totalHospitalBeds);
   const availableBeds = (data.totalHospitalBeds - bedsAreadyOccupied);
   const hospitalBedsByRequestedTime = availableBeds - severeCasesByRequestedTime;
-  const serverehospitalBedsByRequestedTime = availableBeds - ServeresevereCasesByRequestedTime;
-  
+  const serverehospitalBedsByRequestedTime = availableBeds - serveralSevereCasesByRequestedTime;
+  // cases that require ICU care
+  const casesForICUByRequestedTime = ((5 / 100) * infectionsByRequestedTime);
+  const servercasesForICUByRequestedTime = ((5 / 100) * serverinfectionsByRequestedTime);
+  // cases that will require ventilators
+  const casesForVentilatorsByRequestedTime = ((2 / 100) * infectionsByRequestedTime);
+  const servercasesForVentilatorsByRequestedTime = ((2 / 100) * serverinfectionsByRequestedTime);
+  // amount of money to be lost in the economy
+  const totalIncomePerperson = data.region.avgDailyIncomeInUSD * estimateTime;
+  const dailyAvgIncome = data.region.avgDailyIncomePopulation;
+  const dollarsInFlight = (infectionsByRequestedTime * dailyAvgIncome) * totalIncomePerperson;
+  const svrDlrsInFlight = (serverinfectionsByRequestedTime * dailyAvgIncome) * totalIncomePerperson;
+  // return reponse data
   return {
     data: input,
     impact: {
       currentlyInfected,
       infectionsByRequestedTime,
       severeCasesByRequestedTime,
-      hospitalBedsByRequestedTime
+      hospitalBedsByRequestedTime,
+      casesForICUByRequestedTime,
+      casesForVentilatorsByRequestedTime,
+      dollarsInFlight
     },
     severeImpact: {
-      currentlyInfected: serverCurrentlyInfected,
+      currentlyInfected: serverCurrentlyInfcted,
       infectionsByRequestedTime: serverinfectionsByRequestedTime,
-      severeCasesByRequestedTime: ServeresevereCasesByRequestedTime,
-      hospitalBedsByRequestedTime: serverehospitalBedsByRequestedTime
+      severeCasesByRequestedTime: serveralSevereCasesByRequestedTime,
+      hospitalBedsByRequestedTime: serverehospitalBedsByRequestedTime,
+      casesForICUByRequestedTime: servercasesForICUByRequestedTime,
+      casesForVentilatorsByRequestedTime: servercasesForVentilatorsByRequestedTime,
+      dollarsInFlight: svrDlrsInFlight
     }
   };
 };
