@@ -15,12 +15,12 @@ const covid19ImpactEstimator = (data) => {
   const infectionsByRequestedTime = currentlyInfected * (2 ** setOfDays);
   const serverinfectionsByRequestedTime = serverCurrentlyInfcted * (2 ** setOfDays);
   const severeCasesByRequestedTime = Math.floor((15 / 100) * infectionsByRequestedTime);
-  const serveralSevereCasesByRequestedTime = Math.floor((15 / 100) * serverinfectionsByRequestedTime);
+  const servlSevereCasesByRequestedTime = Math.floor((15 / 100) * serverinfectionsByRequestedTime);
   // calculate the number of beds
   const bedsAreadyOccupied = Math.floor((65 / 100) * data.totalHospitalBeds);
   const availableBeds = Math.floor(data.totalHospitalBeds - bedsAreadyOccupied);
   const hospitalBedsByRequestedTime = availableBeds - severeCasesByRequestedTime;
-  const serverehospitalBedsByRequestedTime = availableBeds - serveralSevereCasesByRequestedTime;
+  const serverehospitalBedsByRequestedTime = availableBeds - servlSevereCasesByRequestedTime;
   // cases that require ICU care
   const casesForICUByRequestedTime = ((5 / 100) * infectionsByRequestedTime);
   const servercasesForICUByRequestedTime = ((5 / 100) * serverinfectionsByRequestedTime);
@@ -47,7 +47,7 @@ const covid19ImpactEstimator = (data) => {
     severeImpact: {
       currentlyInfected: serverCurrentlyInfcted,
       infectionsByRequestedTime: serverinfectionsByRequestedTime,
-      severeCasesByRequestedTime: serveralSevereCasesByRequestedTime,
+      severeCasesByRequestedTime: servlSevereCasesByRequestedTime,
       hospitalBedsByRequestedTime: serverehospitalBedsByRequestedTime,
       casesForICUByRequestedTime: servercasesForICUByRequestedTime,
       casesForVentilatorsByRequestedTime: servercasesForVentilatorsByRequestedTime,
