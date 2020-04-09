@@ -22,16 +22,18 @@ const covid19ImpactEstimator = (data) => {
   const hospitalBedsByRequestedTime = availableBeds - severeCasesByRequestedTime;
   const serverehospitalBedsByRequestedTime = availableBeds - servlSevereCasesByRequestedTime;
   // cases that require ICU care
-  const casesForICUByRequestedTime = ((5 / 100) * infectionsByRequestedTime);
-  const servercasesForICUByRequestedTime = ((5 / 100) * serverinfectionsByRequestedTime);
+  const casesForICUByRequestedTime = Math.floor((5 / 100) * infectionsByRequestedTime);
+  const servercasesForICUByRequestedTime = Math.floor((5 / 100) * serverinfectionsByRequestedTime);
   // cases that will require ventilators
-  const casesForVentilatorsByRequestedTime = ((2 / 100) * infectionsByRequestedTime);
-  const servercasesForVentilatorsByRequestedTime = ((2 / 100) * serverinfectionsByRequestedTime);
+  const casesForVentilatorsByRequestedTime = Math.floor((2 / 100) * infectionsByRequestedTime);
+  const servCasesForVentByRequestedTime = Math.floor((2 / 100) * serverinfectionsByRequestedTime);
   // amount of money to be lost in the economy
   const totalIncomePerperson = data.region.avgDailyIncomeInUSD * estimateTime;
   const dailyAvgIncome = data.region.avgDailyIncomePopulation;
-  const dollarsInFlight = (infectionsByRequestedTime * dailyAvgIncome) * totalIncomePerperson;
-  const svrDlrsInFlight = (serverinfectionsByRequestedTime * dailyAvgIncome) * totalIncomePerperson;
+  const dollarsInFlight = Math.floor(infectionsByRequestedTime
+    * dailyAvgIncome) * totalIncomePerperson;
+  const svrDlrsInFlight = Math.floor(serverinfectionsByRequestedTime
+    * dailyAvgIncome) * totalIncomePerperson;
   // return reponse data
   return {
     data: input,
@@ -50,7 +52,7 @@ const covid19ImpactEstimator = (data) => {
       severeCasesByRequestedTime: servlSevereCasesByRequestedTime,
       hospitalBedsByRequestedTime: serverehospitalBedsByRequestedTime,
       casesForICUByRequestedTime: servercasesForICUByRequestedTime,
-      casesForVentilatorsByRequestedTime: servercasesForVentilatorsByRequestedTime,
+      casesForVentilatorsByRequestedTime: servCasesForVentByRequestedTime,
       dollarsInFlight: svrDlrsInFlight
     }
   };
