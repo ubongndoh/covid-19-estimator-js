@@ -9,7 +9,7 @@ const covid19ImpactEstimator = (data) => {
   } else if (data.periodType === 'weeks') {
     estimateTime = data.timeToElapse * 7;
   } else if (data.periodType === 'months') {
-    estimateTime = Math.trunc(data.timeToElapse * 30);
+    estimateTime = data.timeToElapse * 30;
   }
   const setOfDays = Math.trunc(estimateTime / 3);
   const infectionsByRequestedTime = currentlyInfected * (2 ** setOfDays);
@@ -28,8 +28,9 @@ const covid19ImpactEstimator = (data) => {
   const casesForVentilatorsByRequestedTime = Math.trunc((0.02) * infectionsByRequestedTime);
   const servCasesForVentByRequestedTime = Math.trunc((0.02) * serverinfectionsByRequestedTime);
   // amount of money to be lost in the economy
-  const totalIncomePerperson = data.region.avgDailyIncomeInUSD * estimateTime;
-  const dailyAvgIncome = data.region.avgDailyIncomePopulation;
+  const totalIncomePerperson = Math.trunc(data.region.avgDailyIncomeInUSD
+    * estimateTime);
+  const dailyAvgIncome = Math.trunc(data.region.avgDailyIncomePopulation);
   const dollarsInFlight = Math.trunc((infectionsByRequestedTime
     * dailyAvgIncome) / totalIncomePerperson);
   const svrDlrsInFlight = Math.trunc((serverinfectionsByRequestedTime
