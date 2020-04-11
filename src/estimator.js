@@ -14,19 +14,19 @@ const covid19ImpactEstimator = (data) => {
   const setOfDays = Math.trunc(estimateTime / 3);
   const infectionsByRequestedTime = currentlyInfected * (2 ** setOfDays);
   const serverinfectionsByRequestedTime = serverCurrentlyInfcted * (2 ** setOfDays);
-  const severeCasesByRequestedTime = Math.trunc((15 / 100) * infectionsByRequestedTime);
-  const servlSevereCasesByRequestedTime = Math.trunc((15 / 100) * serverinfectionsByRequestedTime);
+  const severeCasesByRequestedTime = Math.trunc((0.15) * infectionsByRequestedTime);
+  const servlSevereCasesByRequestedTime = Math.trunc((0.15) * serverinfectionsByRequestedTime);
   // calculate the number of beds
-  const bedsAreadyOccupied = Math.trunc((65 / 100) * data.totalHospitalBeds);
+  const bedsAreadyOccupied = Math.trunc((0.65) * data.totalHospitalBeds);
   const availableBeds = Math.trunc(data.totalHospitalBeds - bedsAreadyOccupied);
   const hospitalBedsByRequestedTime = availableBeds - severeCasesByRequestedTime;
   const serverehospitalBedsByRequestedTime = availableBeds - servlSevereCasesByRequestedTime;
   // cases that require ICU care
-  const casesForICUByRequestedTime = Math.trunc((5 / 100) * infectionsByRequestedTime);
-  const servercasesForICUByRequestedTime = Math.trunc((5 / 100) * serverinfectionsByRequestedTime);
+  const casesForICUByRequestedTime = Math.trunc((0.05) * infectionsByRequestedTime);
+  const servercasesForICUByRequestedTime = Math.trunc((0.05) * serverinfectionsByRequestedTime);
   // cases that will require ventilators
-  const casesForVentilatorsByRequestedTime = Math.trunc((2 / 100) * infectionsByRequestedTime);
-  const servCasesForVentByRequestedTime = Math.trunc((2 / 100) * serverinfectionsByRequestedTime);
+  const casesForVentilatorsByRequestedTime = Math.trunc((0.02) * infectionsByRequestedTime);
+  const servCasesForVentByRequestedTime = Math.trunc((0.02) * serverinfectionsByRequestedTime);
   // amount of money to be lost in the economy
   const totalIncomePerperson = data.region.avgDailyIncomeInUSD * estimateTime;
   const dailyAvgIncome = data.region.avgDailyIncomePopulation;
