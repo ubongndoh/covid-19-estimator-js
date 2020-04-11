@@ -32,7 +32,7 @@ const covid19ImpactEstimator = (data) => {
   const dailyAvgIncome = data.region.avgDailyIncomePopulation;
   const dollarsInFlight = Math.trunc(infectionsByRequestedTime
     * dailyAvgIncome) / totalIncomePerperson;
-  const svrDlrsInFlight = (serverinfectionsByRequestedTime
+  const svrDlrsInFlight = Math.trunc(serverinfectionsByRequestedTime
     * dailyAvgIncome) / totalIncomePerperson;
   // return reponse data
   return {
