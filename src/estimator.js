@@ -30,8 +30,8 @@ const covid19ImpactEstimator = (data) => {
   // amount of money to be lost in the economy
   const totalIncomePerperson = data.region.avgDailyIncomeInUSD * estimateTime;
   const dailyAvgIncome = data.region.avgDailyIncomePopulation;
-  const dollarsInFlight = (infectionsByRequestedTime * bedsAreadyOccupied) * totalIncomePerperson;
-  const svrDlrsInFlight = (serverinfectionsByRequestedTime * bedsAreadyOccupied) * totalIncomePerperson;
+  const dollarsInFlight = (infectionsByRequestedTime * dailyAvgIncome) * totalIncomePerperson;
+  const svrDlrsInFlight = (serverinfectionsByRequestedTime * dailyAvgIncome) * totalIncomePerperson;
   // return reponse data
   return {
     data: input,
