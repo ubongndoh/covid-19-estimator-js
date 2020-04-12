@@ -28,12 +28,12 @@ const covid19ImpactEstimator = (data) => {
   const casesForVentilatorsByRequestedTime = Math.trunc((0.02) * infectionsByRequestedTime);
   const servCasesForVentByRequestedTime = Math.trunc((0.02) * serverinfectionsByRequestedTime);
   // amount of money to be lost in the economy
-  const totalIncomePerperson = data.region.avgDailyIncomeInUSD * estimateTime;
+  // const totalIncomePerperson = data.region.avgDailyIncomeInUSD * estimateTime;
   const dailyAvgIncome = data.region.avgDailyIncomePopulation;
   const dollarsInFlight = Math.trunc((infectionsByRequestedTime
-    * dailyAvgIncome) / totalIncomePerperson);
+    * dailyAvgIncome) / estimateTime);
   const svrDlrsInFlight = Math.trunc((serverinfectionsByRequestedTime
-    * dailyAvgIncome) / totalIncomePerperson);
+    * dailyAvgIncome) / estimateTime);
   // return reponse data
   return {
     data: input,
